@@ -11,8 +11,8 @@ public class Library {
         books[1] = second;
         books[2] = third;
         books[3] = fourth;
-        for (int index = 0; index < books.length; index++) {
-            System.out.println(books[index].getName() + " - " + books[index].getPageCount());
+        for (Book value : books) {
+            System.out.println(value.getName() + " - " + value.getPageCount());
         }
         Book temp = books[0];
         books[0] = books[3];
@@ -21,7 +21,7 @@ public class Library {
             System.out.println(book.getName() + " - " + book.getPageCount());
         }
         for (Book book : books) {
-            if (book.getName().equals("Clean code")) {
+            if ("Clean code".equals(book.getName())) {
                 System.out.println(book.getName() + " - " + book.getPageCount());
             }
         }
