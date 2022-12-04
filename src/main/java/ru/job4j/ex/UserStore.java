@@ -33,9 +33,9 @@ public class UserStore {
                 System.out.println("This user has an access");
             }
         } catch (UserInvalidException ei) {
-            throw new UserInvalidException("пользователь не валидный");
+            throw new UserInvalidException("This user is not valid");
         } catch (UserNotFoundException enf) {
-            throw new UserNotFoundException("пользователь не найден");
+            throw new UserNotFoundException("This user not found");
         }
     }
 }
