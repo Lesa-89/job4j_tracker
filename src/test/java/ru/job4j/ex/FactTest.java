@@ -16,4 +16,12 @@ class FactTest {
                 });
         assertThat(exception.getMessage()).isEqualTo("N could not be less then 0");
     }
+
+    @Test
+    public void when5then120() {
+        int expected = 120;
+        int n = 5;
+        int result = new Fact().calc(n);
+        assertThat(expected).isEqualTo(result);
+    }
 }
