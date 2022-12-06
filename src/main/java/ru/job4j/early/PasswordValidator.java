@@ -7,23 +7,16 @@ public class PasswordValidator {
     private static final String[] EASY_PASSWORD = new String[]{"qwerty", "12345", "password", "admin", "user"};
 
     public static String validate(String password) {
+        String signsCheckResult;
         if (password == null) {
             throw new IllegalArgumentException("Password can't be null");
         }
         if (password.length() < 8 || password.length() > 32) {
             throw new IllegalArgumentException("Password should be length [8, 32]");
         }
-        if (!containsDigit(password)) {
-            throw new IllegalArgumentException("Password should contain at least one figure");
-        }
-        if (!containsLowerCaseLetter(password)) {
-            throw new IllegalArgumentException("Password should contain at least one lowercase letter");
-        }
-        if (!containsUpperCaseLetter(password)) {
-            throw new IllegalArgumentException("Password should contain at least one uppercase letter");
-        }
-        if (!containsSymbol(password)) {
-            throw new IllegalArgumentException("Password should contain at least one special symbol");
+        signsCheckResult = containsDifferentSigns(password);
+        if (signsCheckResult != null) {
+            throw new IllegalArgumentException(signsCheckResult);
         }
         if (containsEasySubstring(password)) {
             throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
@@ -31,44 +24,40 @@ public class PasswordValidator {
         return password;
     }
 
-    private static boolean containsDigit(String string) {
+    private static String containsDifferentSigns(String string) {
+        boolean hasLowerCase = false;
+        boolean hasUpperCase = false;
+        boolean hasDigit = false;
+        boolean hasSymbol = false;
+        String result = null;
         for (var i = 0; i < string.length(); i++) {
             var symbol = string.charAt(i);
             if (isDigit(symbol)) {
-                return true;
+                hasDigit = true;
             }
-        }
-        return false;
-    }
-
-    private static boolean containsLowerCaseLetter(String string) {
-        for (var i = 0; i < string.length(); i++) {
-            var symbol = string.charAt(i);
             if (isLowerCase(symbol)) {
-                return true;
+                hasLowerCase = true;
             }
-        }
-        return false;
-    }
-
-    private static boolean containsUpperCaseLetter(String string) {
-        for (var i = 0; i < string.length(); i++) {
-            var symbol = string.charAt(i);
             if (isUpperCase(symbol)) {
-                return true;
+                hasUpperCase = true;
             }
-        }
-        return false;
-    }
-
-    private static boolean containsSymbol(String string) {
-        for (var i = 0; i < string.length(); i++) {
-            var symbol = string.charAt(i);
             if (!isDigit(symbol) && !isLetter(symbol)) {
-                return true;
+                hasSymbol = true;
             }
         }
-        return false;
+        if (!hasLowerCase) {
+            result = "Password should contain at least one lowercase letter";
+        }
+        if (!hasUpperCase) {
+            result = "Password should contain at least one uppercase letter";
+        }
+        if (!hasDigit) {
+            result = "Password should contain at least one figure";
+        }
+        if (!hasSymbol) {
+            result = "Password should contain at least one special symbol";
+        }
+        return result;
     }
 
     private static boolean containsEasySubstring(String string) {
