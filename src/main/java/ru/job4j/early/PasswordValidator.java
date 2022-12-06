@@ -44,6 +44,9 @@ public class PasswordValidator {
             if (!isDigit(symbol) && !isLetter(symbol)) {
                 hasSymbol = true;
             }
+            if (hasDigit && hasLowerCase && hasUpperCase && hasSymbol) {
+                break;
+            }
         }
         if (!hasLowerCase) {
             result = "Password should contain at least one lowercase letter";
