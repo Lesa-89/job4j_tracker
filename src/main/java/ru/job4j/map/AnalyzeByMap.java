@@ -29,8 +29,8 @@ public class AnalyzeByMap {
         Map<String, Integer> scoreBySubject = new LinkedHashMap<>();
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                scoreBySubject.putIfAbsent(subject.name(), 0);
-                scoreBySubject.put(subject.name(), scoreBySubject.get(subject.name()) + subject.score());
+                scoreBySubject.put(subject.name(),
+                        scoreBySubject.getOrDefault(subject.name(), 0) + subject.score());
             }
         }
         for (String key : scoreBySubject.keySet()) {
@@ -57,8 +57,8 @@ public class AnalyzeByMap {
         Map<String, Integer> scoreBySubject = new LinkedHashMap<>();
         for (Pupil pupil : pupils) {
             for (Subject subject : pupil.subjects()) {
-                scoreBySubject.putIfAbsent(subject.name(), 0);
-                scoreBySubject.put(subject.name(), scoreBySubject.get(subject.name()) + subject.score());
+                scoreBySubject.put(subject.name(),
+                        scoreBySubject.getOrDefault(subject.name(), 0) + subject.score());
             }
         }
         for (String key : scoreBySubject.keySet()) {
